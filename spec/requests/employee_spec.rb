@@ -1,13 +1,6 @@
-require 'spec_helper'
 require 'rails_helper'
 
 describe 'Employees' do
-  include Rack::Test::Methods
-
-  def app
-    API
-  end
-
   before(:all) do
     @client = FactoryBot.create(:client)
     @project = FactoryBot.create(:project, client: @client)
@@ -16,7 +9,7 @@ describe 'Employees' do
     describe 'should return employee list' do
       before do
         @employee = FactoryBot.create(:employee, project: @project)
-        get '/v1/employees'
+        get '/api/v1/employees'
       end
 
       it 'returns 200 success status' do
@@ -29,7 +22,7 @@ describe 'Employees' do
     describe 'should return employee details' do
       before do
         @employee = FactoryBot.create(:employee, project: @project)
-        get "/v1/employees/#{@employee.id}"
+        get "/api/v1/employees/#{@employee.id}"
       end
 
       it 'returns 200 success status' do
@@ -41,7 +34,7 @@ describe 'Employees' do
   describe 'POST /v1/employees' do
     describe 'should save parameters' do
       before do
-        post '/v1/employees'
+        post '/api/v1/employees'
       end
 
       it 'returns 201 success status' do
@@ -54,7 +47,7 @@ describe 'Employees' do
     describe 'should save parameters' do
       before do
         @employee = FactoryBot.create(:employee, project: @project)
-        put "/v1/employees/#{@employee.id}"
+        put "/api/v1/employees/#{@employee.id}"
       end
 
       it 'returns 200 success status' do
@@ -67,7 +60,7 @@ describe 'Employees' do
     describe 'should delete employee' do
       before(:each) do
         @employee = FactoryBot.create(:employee, project: @project)
-        delete "/v1/employees/#{@employee.id}"
+        delete "/api/v1/employees/#{@employee.id}"
       end
 
       it 'returns 200 success status' do
@@ -76,11 +69,10 @@ describe 'Employees' do
     end
   end
 
-  describe 'POST /v1/employees/:employee_id/projects/project_id' do
+  describe 'POST /v1/employees/projects/project_id' do
     describe 'should save parameters' do
       before(:each) do
-        @employee = FactoryBot.create(:employee, project: @project)
-        delete "/v1/employees/#{@employee.id}/projects/#{@project.id}"
+        post "/api/v1/employees/projects/#{@project.id}"
       end
 
       it 'returns 201 success status' do

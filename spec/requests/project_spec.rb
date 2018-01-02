@@ -1,18 +1,13 @@
 require 'spec_helper'
 
 describe 'Projects' do
-  include Rack::Test::Methods
-
-  def app
-    API
-  end
 
   describe 'GET /v1/projects' do
     describe 'should return project list' do
       before do
         @client = FactoryBot.create(:client)
         @project = FactoryBot.create(:project, client: @client)
-        get '/v1/projects'
+        get '/api/v1/projects'
       end
 
       it 'returns 200 success status' do
@@ -26,7 +21,7 @@ describe 'Projects' do
       before do
         @client = FactoryBot.create(:client)
         @project = FactoryBot.create(:project, client: @client)
-        get "/v1/projects/#{@project.id}"
+        get "/api/v1/projects/#{@project.id}"
       end
 
       it 'returns 200 success status' do
@@ -38,7 +33,7 @@ describe 'Projects' do
   describe 'POST /v1/projects' do
     describe 'should save parameters' do
       before do
-        post '/v1/projects'
+        post '/api/v1/projects'
       end
 
       it 'returns 201 success status' do
@@ -52,7 +47,7 @@ describe 'Projects' do
       before do
         @client = FactoryBot.create(:client)
         @project = FactoryBot.create(:project, client: @client)
-        put "/v1/projects/#{@project.id}"
+        put "/api/v1/projects/#{@project.id}"
       end
 
       it 'returns 200 success status' do
@@ -66,7 +61,7 @@ describe 'Projects' do
       before(:each) do
         @client = FactoryBot.create(:client)
         @project = FactoryBot.create(:project, client: @client)
-        delete "/v1/projects/#{@project.id}"
+        delete "/api/v1/projects/#{@project.id}"
       end
 
       it 'returns 200 success status' do
